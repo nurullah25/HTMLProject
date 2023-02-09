@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Ashley Home Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <link href="Styles/style.css" rel="stylesheet" />
+    <script src="./Scripts/jquery.js"></script>
+    
+</head>
+
+<body>
+    
+    <header>
+        <div class="logo">
+            <img src="logo.png" />
+        </div>
+
+        <div class="nav">
+
+            <ul>
+                <li><a href="mainpage.html">Home</a></li>
+                <li><a href="index.html">Products</a></li>
+                <li><a href="add_product.html">Upload Product</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+            <div class="search-box">
+                <input id="searchinput" type="text" name="name" value="" />
+                <button id="btnsearch">Search</button>
+            </div>
+
+        </div>
+    </header>
+
+    <section class="content-section">
+        <div class="category-section">
+            <h2>Categories</h2>
+            <nav>
+                <ul class="side-category">
+                    <li><a href="mainpage.html">Home</a></li>
+                    <li><a href="">Living Room</a></li>
+                    <li><a href="">Bed Room</a></li>
+                    <li><a href="">Reading Table</a></li>
+                    <li><a href="">Dining</a></li>
+                    <li><a href="">Kitchen</a></li>
+                    <li><a href="">Best Comfort</a></li>
+                </ul>
+            </nav>
+        </div>
+
+
+        <div class="product-section" id="product-grid">
+
+
+            <!--<div class="card-container">
+                <div class="card">
+                    <img src="Images/1.jpg" alt="" />
+                </div>
+                <div class="card-info">
+                    <h3 class="product-title">Single Couch</h3>
+                    <p class="product-price">TK.5000</p>
+                    <button>Add to cart</button>
+                </div>
+            </div>-->
+        </div>
+    </section>
+
+
+    <script>
+
+        $(document).ready(function () {
+            var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+
+            window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction;
+            window.IDBCursor = window.IDBCursor || window.webkitIDBCursor;
+            window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange;
+
+            var db;
+            var currentEdit = null;
+
+            var openReq = indexedDB.open("DetailsDB", 1);
+            openReq.onupgradeneeded = function (e) {
+                db = e.target.result;
+
+                var store = db.createObjectStore("Details", { keyPath: "id", autoIncrement: true });
+                console.log(store);
+            }
+
+            openReq.onsuccess = function (e) {
+                db = e.target.result;
+                console.log(db);
+                loadProducts();
+            }
+
+            // Product search using search box
+            $("#btnsearch").on('click', function () {
+                var searchText = $("#searchinput").val();
+
+                $("#product-grid").empty();
+                var tx = db.transaction(["Details"], "readonly");
+                var req = tx.objectStore("Details").openCursor();
+                req.onsuccess = function (e) {
+                    var cursor = e.target.result;
+                    if (!cursor) return;
+                    if (cursor.value.ProductTitle.toLowerCase().includes(searchText.toLowerCase())) {
+                        $("#product-grid").append(
+
+                            `<div class="card-container">
+                                            <div class="card">
+                                                <img src="Images/${cursor.value.ProductImage}" alt="" />
+                                            </div>
+                                            <div class="card-info">
+                                                <h3 class="product-title">${cursor.value.ProductTitle}</h3>
+                                                <p class="product-price">TK.${cursor.value.ProductPrice}</p>
+                                                <button class="add-to-cart" data-product-id="${cursor.key}">Add to cart</button>
+                                            </div>
+                                        </div >`
+                        );
+                    }
+                    cursor.continue();
+                }
+                req.onerror = function (err) {
+                    console.log(err);
+                }
+            });
+
+            function loadProducts() {
+                $("#product-grid").empty();
+                var tx = db.transaction(["Details"], "readonly");
+                var req = tx.objectStore("Details").openCursor();
+                req.onsuccess = function (e) {
+                    var cursor = e.target.result;
+                    if (!cursor) return;
+                    $("#product-grid").append(
+
+                        `<div class="card-container" >
+                                            <div class="card">
+                                                <img src="Images/${cursor.value.ProductImage}" alt="" />
+                                            </div>
+                                            <div class="card-info">
+                                                <h3 class="product-title">${cursor.value.ProductTitle}</h3>
+                                                <p class="product-price">TK.${cursor.value.ProductPrice}</p>
+                                                <button class="add-to-cart" data-product-id="${cursor.key}">Add to cart</button>
+                                            </div>
+                                        </div >`
+
+                    );
+                    cursor.continue();
+                }
+                req.onerror = function (err) {
+                    console.log(err);
+                }
+            }
+        });
+       
+    </script>
+
+</body>
+</html>
+<footer>
+    <section>
+        <div id="containerFooter">
+
+            <div id="webFooter">
+                <h3> Online store </h3>
+                <p> Bed Room </p>
+                <p> Living Room </p>
+                <p> Dining </p>
+                <p> Reading </p>
+            </div>
+            <div id="webFooter">
+                <h3> Helpful link </h3>
+                <p> home </p>
+                <p> about </p>
+                <p> contact </p>
+            </div>
+            <div id="webFooter">
+                <h3> Partners </h3>
+                <p> Group of A</p>
+                <p> Group of B</p>
+                <p> Group of C</p>
+
+            </div>
+            <div id="webFooter">
+                <h3> Address </h3>
+                <p> empire Building </p>
+                <p> Dhanmondi </p>
+                <p> dhaka - 1216 </p>
+                <p> Bangladesh </p>
+            </div>
+        </div>
+        <div id="credit"><a href=""> © Ashley Home Store </a></div>
+    </section>
+
+</footer>

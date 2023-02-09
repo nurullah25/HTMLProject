@@ -1,0 +1,391 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>Ashley Home Store</title>
+        
+    <link href="Styles/mainstyle.css" rel="stylesheet" />
+    
+    <style>
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
+
+        .price {
+            color: grey;
+            font-size: 22px;
+        }
+
+        .card button {
+            border: none;
+            outline: 0;
+            padding: 8px;
+            color: white;
+            background-color: #a80707;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+            margin: auto;
+        }
+
+            .card button:hover {
+                opacity: 0.7;
+            }
+
+        .mycard {
+            margin-left: 145px;
+        }
+
+        .card {
+            float: left;
+            padding: 5px;
+            margin-left: 35px;
+            margin-bottom: 30px;
+        }
+
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="admin"><p><a href="mainpage.html">Home | </a>
+        <a href="index.html">Product | </a>
+        <a href="add_product.html">Upload Product</a></p></div>       
+    <header>
+
+        <div id="logo">
+
+            <div id="lo"><img src="logo.png" /></div>
+        </div>
+    </header>
+    <div class="header-area">
+        <div class="wrapper">
+
+            <nav class="menu">
+                <h2>Categories</h2>
+                <ul>
+                    <li><a href="mainpage.html">Home</a></li>
+                    <li><a href="Index.html">All Furniture</a></li>
+                    <li>
+                        <a href="#">Bed Room</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="#">Single Bed</a>
+                            </li>
+                            <li>
+                                <a href="#">Doble Bed</a>
+                            </li>
+                            <li>
+                                <a href="#">Delux Bed</a>
+                            </li>
+                        </ul>
+
+                    </li>
+
+
+                    <li>
+                        <a href="#">Living</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="#">Single Couch</a>
+
+                            </li>
+                            <li>
+                                <a href="#">Sofa Set</a>
+
+
+                            </li>
+                        </ul>
+
+                    </li>
+
+                    <li>
+                        <a href="#">Reading table</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="#">Computer Table</a>
+
+                            </li>
+                            <li>
+                                <a href="#">Reading table</a>
+
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li>
+                        <a href="#">Dining Room</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="#">Dininig Set</a>
+                            </li>
+                            <li>
+                                <a href="#">Dining Chair</a>
+                            </li>
+                            <li>
+                                <a href="#">Showcase</a>
+                            </li>
+                        </ul>
+
+                    </li>
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </div>
+    
+    <div id="wholeslide">
+        <div class="slideshow-container">
+
+            <div class="mySlides fade">
+                <div class="numbertext"></div>
+                <img src="slide1.jpg" style="width:90%;align-content:center">
+                
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext"></div>
+                <img src="slide2.jpg" style="width:90%;height: 50%">
+                
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext"></div>
+                <img src="slide3.jpg" style="width:90%">
+                
+            </div>
+
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+
+        </div>
+        <br>
+
+        <div class="slidedot" style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    
+    <div class="mycard">
+        <div class="row">
+            <div class="card">
+                <img src="./Images/13.jpg" class="img-fluid img-thumbnail item-img" alt="menu item" style="width:100%">
+                <h3>Single Couch</h3>
+                <p class="price">$19.99</p>           
+                
+              
+            </div>
+            <div class="card">
+                <img src="./Images/11.jpg" class="img-fluid img-thumbnail item-img" alt="menu item" style="width:100%">
+                <h3>Dining Table</h3>
+                <p class="price">$19.99</p>
+                
+            </div>
+            <div class="card">
+                <img src="./Images/1.jpg" class="img-fluid img-thumbnail item-img" alt="menu item" style="width:100%">
+                <h3>Single Couch</h3>
+                <p class="price">$19.99</p>
+               
+            </div>
+            <div class="card">
+                <img src="./Images/2.jpg" class="img-fluid img-thumbnail item-img" alt="menu item" style="width:100%">
+                <h3>Single Couch</h3>
+                <p class="price">$19.99</p>
+               
+            </div>
+            <div class="card">
+                <img src="./Images/4.jpg" class="img-fluid img-thumbnail item-img" alt="menu item" style="width:100%">
+                <h3>Couch</h3>
+                <p class="price">$19.99</p>
+                
+            </div>
+            <div class="card">
+                <img src="./Images/5.jpg" class="img-fluid img-thumbnail item-img" alt="menu item" style="width:100%">
+                <h3>King Size Bed</h3>
+                <p class="price">$19.99</p>
+               
+            </div>
+            <div class="card">
+                <img src="./Images/7.jpg" class="img-fluid img-thumbnail item-img" alt="menu item" style="width:100%">
+                <h3>Double Bed</h3>
+                <p class="price">$19.99</p>
+                
+            </div>
+            <div class="card">
+                <img src="./Images/8.jpg" class="img-fluid img-thumbnail item-img" alt="menu item" style="width:100%">
+                <h3>Couch Set</h3>
+                <p class="price">$19.99</p>
+                
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <br>
+
+    <footer>
+        <section>
+            <div id="containerFooter">
+
+                <div id="webFooter">
+                    <h3> Online store </h3>
+                    <p> Bed Room </p>
+                    <p> Living Room </p>
+                    <p> Dining </p>
+                    <p> Reading </p>
+                </div>
+                <div id="webFooter">
+                    <h3> Helpful link </h3>
+                    <p> home </p>
+                    <p> about </p>
+                    <p> contact </p>
+                </div>
+                <div id="webFooter">
+                    <h3> Partners </h3>
+                    <p> Group of A</p>
+                    <p> Group of B</p>
+                    <p> Group of C</p>
+
+                </div>
+                <div id="webFooter">
+                    <h3> Address </h3>
+                    <p> empire Building </p>
+                    <p> Dhanmondi </p>
+                    <p> dhaka - 1216 </p>
+                    <p> Bangladesh </p>
+                </div>
+            </div>
+            <div id="credit"><a href=""> © Ashley Home Store </a></div>
+        </section>
+
+    </footer>
+
+
+    <script>
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1 }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+            setTimeout(showSlides, 3000);
+
+                $(document).ready(function () {
+                var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+
+                window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction;
+                window.IDBCursor = window.IDBCursor || window.webkitIDBCursor;
+                window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange;
+
+                var db;
+                var currentEdit = null;
+
+                var openReq = indexedDB.open("DetailsDB", 1);
+                openReq.onupgradeneeded = function (e) {
+                    db = e.target.result;
+
+                var store = db.createObjectStore("Details", {keyPath: "id", autoIncrement: true });
+                console.log(store);
+                }
+
+                openReq.onsuccess = function (e) {
+                    db = e.target.result;
+                console.log(db);
+                loadProducts();
+                }
+
+
+                // Product search using search box
+
+                $("#btnsearch").on('click', function () {
+                    // alert('hello');
+                    var searchText = $("#searchinput").val();
+
+                $("#product-grid").empty();
+                var tx = db.transaction(["Details"], "readonly");
+                var req = tx.objectStore("Details").openCursor();
+                req.onsuccess = function (e) {
+                        var cursor = e.target.result;
+                if (!cursor) return;
+                if (cursor.value.ProductTitle.toLowerCase().includes(searchText.toLowerCase())) {
+                    $("#product-grid").append(
+
+                        `<div class="card-container">
+                        <div class="card">
+                            <img src="Images/${cursor.value.ProductImage}" alt="" />
+                        </div>
+                        <div class="card-info">
+                            <h3 class="product-title">${cursor.value.ProductTitle}</h3>
+                            <p class="product-price">TK.${cursor.value.ProductPrice}</p>
+                            <button class="add-to-cart" data-product-id="${cursor.key}">Add to cart</button>
+                        </div>
+                    </div >`
+                    );
+                        }
+                cursor.continue();
+                    }
+                req.onerror = function (err) {
+                    console.log(err);
+                    }
+                });
+                function loadProducts() {
+                    $("#product-grid").empty();
+                var tx = db.transaction(["Details"], "readonly");
+                var req = tx.objectStore("Details").openCursor();
+                req.onsuccess = function (e) {
+                        var cursor = e.target.result;
+                if (!cursor) return;
+                $("#product-grid").append(
+
+                `<div class="card-container" >
+                    <div class="card">
+                        <img src="Images/${cursor.value.ProductImage}" alt="" />
+                    </div>
+                    <div class="card-info">
+                        <h3 class="product-title">${cursor.value.ProductTitle}</h3>
+                        <p class="product-price">TK.${cursor.value.ProductPrice}</p>
+                        <button class="add-to-cart" data-product-id="${cursor.key}">Add to cart</button>
+                    </div>
+                </div >`
+
+                );
+                cursor.continue();
+                    }
+                req.onerror = function (err) {
+                    console.log(err);
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

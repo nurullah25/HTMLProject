@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ashley Home Store</title>
+    <link href="Styles/style.css" rel="stylesheet" />
+    <script src="Scripts/jquery.js"></script>
+    <script src="Scripts/jquery-3.5.1.js"></script>
+    <link rel="stylesheet" href="./Styles/add_product.html">
+    <link href="Styles/add_product.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" />
+        </div>        
+            <div class="nav">
+                <ul>
+                    <li><a href="mainpage.html">Home</a></li>
+                    <li><a href="index.html">Product</a></li>
+                    <li><a href="add_product.html">Upload Product</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">About</a></li>
+
+                </ul>
+            </div>
+            
+    </header>
+    <section class="content-section1">
+        
+
+        <section>
+            <div id="container">
+
+                <div id="right">
+                    <h2>Add New Product</h2>
+                    <div>
+                        <label class="label">Product Name</label>
+                        <input type="text" id="product-title" />
+                    </div>
+                    <div>
+                        <label class="label">Category</label>
+                        <select class="category" name="category" id="product-category">
+                            <option value="">Select Category</option>
+                            <option value="Living Room">Living Room</option>
+                            <option value="Bed Room">Bed Room</option>
+                            <option value="Dining">Dining</option>
+                            <option value="Kitchen">Kitchen</option>
+                            <option value="Reading Table">Reading Table</option>
+                            <option value="Best Comfort">Best Comfort</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="label">Prices</label>
+                        <input type="text" id="product-price" />
+                    </div>
+                    <div>
+                        <label class="label">Image</label>
+                        <input type="text" id="product-image" />
+                    </div>
+                    <div>
+                        <input type="button" id="add" value="Add New Product" />
+                    </div>
+                </div>
+                <div id="left">
+
+                    <table id="tbl" cellpadding="3" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Image</th>
+                                <th>----</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </section>
+
+
+    <script type="text/javascript">
+        var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+
+        window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction;
+        window.IDBCursor = window.IDBCursor || window.webkitIDBCursor;
+        window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange;
+
+        var db;
+        var currentEdit = null;
+
+        $(document).ready(function () {
+            var openReq = indexedDB.open("DetailsDB", 1);
+            openReq.onupgradeneeded = function (e) {
+                db = e.target.result;
+
+                var store = db.createObjectStore("Details", { keyPath: "id", autoIncrement: true });
+                console.log(store);
+            }
+
+            openReq.onsuccess = function (e) {
+                db = e.target.result;
+                console.log(db);
+                readAll();
+
+                //Add Data
+                $("#add").click(function () {
+                    if ($("#fname").val() != "" && $("#lname").val() != "" && $("#email").val() != "" && $("#phone").val() != "") {
+                        var tx = db.transaction(["Details"], "readwrite");
+                        if (currentEdit == null) {
+                            var store = tx.objectStore("Details");
+                            var req = store.add({
+                                ProductTitle: $("#product-title").val(),
+                                ProductCategory: $("#product-category").val(),
+                                ProductPrice: $("#product-price").val(),
+                                ProductImage: $("#product-image").val()
+                            });
+                            req.onsuccess = function (e) {
+                                console.log("Added data...");
+                                readAll();
+                            }
+                        }
+                        else {
+                            var store = tx.objectStore("Details");
+                            var req = store.put({
+                                ProductTitle: $("#product-title").val(),
+                                ProductCategory: $("#product-category").val(),
+                                ProductPrice: $("#product-price").val(),
+                                ProductImage: $("#product-image").val(),
+                                id: currentEdit.id
+                            });
+                            req.onsuccess = function (e) {
+                                console.log("Updated data...");
+                                readAll();
+                            }
+                        }
+                        $("#add").val("Add New");
+                        currentEdit = null;
+                    }
+                    else {
+                        alert("Please fill up the all fields!!!");
+                    }
+                });
+            }
+        });
+
+        function readAll() {
+            $("#tbl tbody").empty();
+            var tx = db.transaction(["Details"], "readonly");
+            var req = tx.objectStore("Details").openCursor();
+            req.onsuccess = function (e) {
+                var cursor = e.target.result;
+                if (!cursor) return;
+                $("#tbl tbody").append(
+                    "<tr>" +
+                    "<td>" + cursor.value.ProductTitle + "</td>" +
+                    "<td>" + cursor.value.ProductCategory + "</td>" +
+                    "<td>" + cursor.value.ProductPrice + "</td>" +
+                    "<td>" + cursor.value.ProductImage + "</td>" +
+                    "<td>" + "<button type='button' class='edit' data-key='" + cursor.key + "'>Edit</button>|<button type = 'button' class='delete' data-key='" + cursor.key + "'>Delete</button>" + "</td>" +
+                    "</tr>"
+                )
+                cursor.continue();
+            }
+            req.onerror = function (err) {
+                console.log(err);
+            }
+            //for delete
+            tx.oncomplete = function () {
+                $(".delete").click(function () {
+                    var id = $(this).attr('data-key');
+                    var row = $(this).parent().parent();
+                    var tx = db.transaction(["Details"], "readwrite");
+                    var store = tx.objectStore("Details");
+                    var req = store.delete(parseInt(id));
+                    req.onsuccess = function (e) {
+                        console.log("Data deleted successfullly!!!!");
+                        row.remove();
+                    }
+                })
+
+                //For edit
+                $(".edit").click(function (evt) {
+                    evt.preventDefault();
+                    fillForm($(this).attr('data-key'));
+                })
+            }
+        }
+
+        function fillForm(id) {
+            var t = db.transaction(["Details"], "readwrite");
+            var objStore = t.objectStore("Details");
+            var request = objStore.get(parseInt(id));
+            request.onsuccess = function (evt) {
+                currentEdit = request.result;
+                console.log(currentEdit);
+                $("#product-title").val(currentEdit.ProductTitle);
+                $("#product-category").val(currentEdit.ProductCategory);
+                $("#product-price").val(currentEdit.ProductPrice);
+                $("#product-image").val(currentEdit.ProductImage);
+                $("#add").val("Update");
+            }
+        }
+    </script>
+</body>
+</html>
+<footer>
+    <section>
+        <div id="containerFooter">
+
+            <div id="webFooter">
+                <h3> Online store </h3>
+                <p> Bed Room </p>
+                <p> Living Room </p>
+                <p> Dining </p>
+                <p> Reading </p>
+            </div>
+            <div id="webFooter">
+                <h3> Helpful link </h3>
+                <p> home </p>
+                <p> about </p>
+                <p> contact </p>
+            </div>
+            <div id="webFooter">
+                <h3> Partners </h3>
+                <p> Group of A</p>
+                <p> Group of B</p>
+                <p> Group of C</p>
+
+            </div>
+            <div id="webFooter">
+                <h3> Address </h3>
+                <p> empire Building </p>
+                <p> Dhanmondi </p>
+                <p> dhaka - 1216 </p>
+                <p> Bangladesh </p>
+            </div>
+        </div>
+        <div id="credit"><a href=""> © Ashley Home Store </a></div>
+    </section>
+
+</footer>
